@@ -278,7 +278,7 @@ namespace _calculator
             return correct;
         }
 
-        public decimal[] ConvertInPolish(decimal[] exprInNum)
+        public decimal[] ConvertToPolish(decimal[] exprInNum)
         {
             int index = 0;
             int indexPolish = 0;
@@ -420,6 +420,8 @@ namespace _calculator
             btnLn.Visible = false;
             btnSqrt.Visible = false;
             btnDeg.Visible = false;
+
+            this.Width = 212;
         }
 
         private void input_Click(object sender, EventArgs e)
@@ -483,7 +485,7 @@ namespace _calculator
 
                 if (Correctness(exprInNum))
                 {
-                    exprInNum = ConvertInPolish(exprInNum);
+                    exprInNum = ConvertToPolish(exprInNum);
 
                     decimal res = Calculate(exprInNum);
 
@@ -712,7 +714,7 @@ namespace _calculator
                 btnSqrt.Visible = false;
                 btnDeg.Visible = false;
 
-                this.Width = 314;
+                this.Width = 212;
             }
             else
             {
@@ -722,7 +724,7 @@ namespace _calculator
                 btnSqrt.Visible = true;
                 btnDeg.Visible = true;
 
-                this.Width = 384;
+                this.Width = 258;
             }
 
             engineerNow = !engineerNow;

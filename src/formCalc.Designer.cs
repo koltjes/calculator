@@ -59,7 +59,7 @@
             // btnMul
             // 
             this.btnMul.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMul.Location = new System.Drawing.Point(216, 94);
+            this.btnMul.Location = new System.Drawing.Point(287, 94);
             this.btnMul.Name = "btnMul";
             this.btnMul.Size = new System.Drawing.Size(63, 34);
             this.btnMul.TabIndex = 0;
@@ -69,7 +69,7 @@
             // btn2
             // 
             this.btn2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn2.Location = new System.Drawing.Point(78, 174);
+            this.btn2.Location = new System.Drawing.Point(149, 174);
             this.btn2.Name = "btn2";
             this.btn2.Size = new System.Drawing.Size(63, 34);
             this.btn2.TabIndex = 1;
@@ -79,7 +79,7 @@
             // btn9
             // 
             this.btn9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn9.Location = new System.Drawing.Point(147, 94);
+            this.btn9.Location = new System.Drawing.Point(218, 94);
             this.btn9.Name = "btn9";
             this.btn9.Size = new System.Drawing.Size(63, 34);
             this.btn9.TabIndex = 2;
@@ -89,7 +89,7 @@
             // btnEq
             // 
             this.btnEq.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEq.Location = new System.Drawing.Point(216, 214);
+            this.btnEq.Location = new System.Drawing.Point(287, 214);
             this.btnEq.Name = "btnEq";
             this.btnEq.Size = new System.Drawing.Size(63, 34);
             this.btnEq.TabIndex = 3;
@@ -100,7 +100,7 @@
             // btn7
             // 
             this.btn7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn7.Location = new System.Drawing.Point(9, 94);
+            this.btn7.Location = new System.Drawing.Point(80, 94);
             this.btn7.Name = "btn7";
             this.btn7.Size = new System.Drawing.Size(63, 34);
             this.btn7.TabIndex = 4;
@@ -110,7 +110,7 @@
             // btnSum
             // 
             this.btnSum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSum.Location = new System.Drawing.Point(216, 174);
+            this.btnSum.Location = new System.Drawing.Point(287, 174);
             this.btnSum.Name = "btnSum";
             this.btnSum.Size = new System.Drawing.Size(63, 34);
             this.btnSum.TabIndex = 5;
@@ -120,7 +120,7 @@
             // btnLeftBr
             // 
             this.btnLeftBr.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLeftBr.Location = new System.Drawing.Point(9, 54);
+            this.btnLeftBr.Location = new System.Drawing.Point(80, 54);
             this.btnLeftBr.Name = "btnLeftBr";
             this.btnLeftBr.Size = new System.Drawing.Size(63, 34);
             this.btnLeftBr.TabIndex = 6;
@@ -130,7 +130,7 @@
             // btn3
             // 
             this.btn3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn3.Location = new System.Drawing.Point(147, 174);
+            this.btn3.Location = new System.Drawing.Point(218, 174);
             this.btn3.Name = "btn3";
             this.btn3.Size = new System.Drawing.Size(63, 34);
             this.btn3.TabIndex = 7;
@@ -140,7 +140,7 @@
             // btn0
             // 
             this.btn0.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn0.Location = new System.Drawing.Point(78, 214);
+            this.btn0.Location = new System.Drawing.Point(149, 214);
             this.btn0.Name = "btn0";
             this.btn0.Size = new System.Drawing.Size(63, 34);
             this.btn0.TabIndex = 8;
@@ -150,7 +150,7 @@
             // btn4
             // 
             this.btn4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn4.Location = new System.Drawing.Point(9, 134);
+            this.btn4.Location = new System.Drawing.Point(80, 134);
             this.btn4.Name = "btn4";
             this.btn4.Size = new System.Drawing.Size(63, 34);
             this.btn4.TabIndex = 9;
@@ -160,7 +160,7 @@
             // btn5
             // 
             this.btn5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn5.Location = new System.Drawing.Point(78, 134);
+            this.btn5.Location = new System.Drawing.Point(149, 134);
             this.btn5.Name = "btn5";
             this.btn5.Size = new System.Drawing.Size(63, 34);
             this.btn5.TabIndex = 10;
@@ -170,7 +170,7 @@
             // btnSub
             // 
             this.btnSub.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSub.Location = new System.Drawing.Point(216, 134);
+            this.btnSub.Location = new System.Drawing.Point(287, 134);
             this.btnSub.Name = "btnSub";
             this.btnSub.Size = new System.Drawing.Size(63, 34);
             this.btnSub.TabIndex = 11;
@@ -180,7 +180,7 @@
             // btn1
             // 
             this.btn1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn1.Location = new System.Drawing.Point(9, 174);
+            this.btn1.Location = new System.Drawing.Point(80, 174);
             this.btn1.Name = "btn1";
             this.btn1.Size = new System.Drawing.Size(63, 34);
             this.btn1.TabIndex = 12;
@@ -190,7 +190,7 @@
             // btn6
             // 
             this.btn6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn6.Location = new System.Drawing.Point(147, 134);
+            this.btn6.Location = new System.Drawing.Point(218, 134);
             this.btn6.Name = "btn6";
             this.btn6.Size = new System.Drawing.Size(63, 34);
             this.btn6.TabIndex = 13;
@@ -200,7 +200,7 @@
             // btn8
             // 
             this.btn8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btn8.Location = new System.Drawing.Point(78, 94);
+            this.btn8.Location = new System.Drawing.Point(149, 94);
             this.btn8.Name = "btn8";
             this.btn8.Size = new System.Drawing.Size(63, 34);
             this.btn8.TabIndex = 14;
@@ -211,7 +211,7 @@
             // 
             this.btnSwitch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSwitch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnSwitch.Location = new System.Drawing.Point(9, 214);
+            this.btnSwitch.Location = new System.Drawing.Point(80, 214);
             this.btnSwitch.Name = "btnSwitch";
             this.btnSwitch.Size = new System.Drawing.Size(63, 34);
             this.btnSwitch.TabIndex = 15;
@@ -222,7 +222,7 @@
             // btnDecSep
             // 
             this.btnDecSep.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDecSep.Location = new System.Drawing.Point(147, 214);
+            this.btnDecSep.Location = new System.Drawing.Point(218, 214);
             this.btnDecSep.Name = "btnDecSep";
             this.btnDecSep.Size = new System.Drawing.Size(63, 34);
             this.btnDecSep.TabIndex = 16;
@@ -232,7 +232,7 @@
             // btnRightBr
             // 
             this.btnRightBr.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRightBr.Location = new System.Drawing.Point(78, 54);
+            this.btnRightBr.Location = new System.Drawing.Point(149, 54);
             this.btnRightBr.Name = "btnRightBr";
             this.btnRightBr.Size = new System.Drawing.Size(63, 34);
             this.btnRightBr.TabIndex = 17;
@@ -242,7 +242,7 @@
             // btnBackSp
             // 
             this.btnBackSp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnBackSp.Location = new System.Drawing.Point(147, 54);
+            this.btnBackSp.Location = new System.Drawing.Point(218, 54);
             this.btnBackSp.Name = "btnBackSp";
             this.btnBackSp.Size = new System.Drawing.Size(63, 34);
             this.btnBackSp.TabIndex = 18;
@@ -253,7 +253,7 @@
             // btnDiv
             // 
             this.btnDiv.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDiv.Location = new System.Drawing.Point(216, 54);
+            this.btnDiv.Location = new System.Drawing.Point(287, 54);
             this.btnDiv.Name = "btnDiv";
             this.btnDiv.Size = new System.Drawing.Size(63, 34);
             this.btnDiv.TabIndex = 19;
@@ -264,7 +264,7 @@
             // 
             this.btnLn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnLn.Location = new System.Drawing.Point(-60, 134);
+            this.btnLn.Location = new System.Drawing.Point(11, 134);
             this.btnLn.Name = "btnLn";
             this.btnLn.Size = new System.Drawing.Size(63, 34);
             this.btnLn.TabIndex = 24;
@@ -275,7 +275,7 @@
             // btnCos
             // 
             this.btnCos.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCos.Location = new System.Drawing.Point(-60, 214);
+            this.btnCos.Location = new System.Drawing.Point(11, 214);
             this.btnCos.Name = "btnCos";
             this.btnCos.Size = new System.Drawing.Size(63, 34);
             this.btnCos.TabIndex = 23;
@@ -286,7 +286,7 @@
             // btnSin
             // 
             this.btnSin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSin.Location = new System.Drawing.Point(-60, 174);
+            this.btnSin.Location = new System.Drawing.Point(11, 174);
             this.btnSin.Name = "btnSin";
             this.btnSin.Size = new System.Drawing.Size(63, 34);
             this.btnSin.TabIndex = 22;
@@ -297,7 +297,7 @@
             // btnDeg
             // 
             this.btnDeg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDeg.Location = new System.Drawing.Point(-60, 54);
+            this.btnDeg.Location = new System.Drawing.Point(11, 54);
             this.btnDeg.Name = "btnDeg";
             this.btnDeg.Size = new System.Drawing.Size(63, 34);
             this.btnDeg.TabIndex = 21;
@@ -308,7 +308,7 @@
             // btnSqrt
             // 
             this.btnSqrt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSqrt.Location = new System.Drawing.Point(-60, 94);
+            this.btnSqrt.Location = new System.Drawing.Point(11, 94);
             this.btnSqrt.Name = "btnSqrt";
             this.btnSqrt.Size = new System.Drawing.Size(63, 34);
             this.btnSqrt.TabIndex = 20;
@@ -319,7 +319,7 @@
             // lblExpr
             // 
             this.lblExpr.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblExpr.Location = new System.Drawing.Point(-59, 9);
+            this.lblExpr.Location = new System.Drawing.Point(12, 9);
             this.lblExpr.Name = "lblExpr";
             this.lblExpr.Size = new System.Drawing.Size(338, 42);
             this.lblExpr.TabIndex = 25;
@@ -331,7 +331,8 @@
             this.AcceptButton = this.btnEq;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(291, 260);
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.ClientSize = new System.Drawing.Size(362, 260);
             this.Controls.Add(this.lblExpr);
             this.Controls.Add(this.btnLn);
             this.Controls.Add(this.btnCos);
@@ -361,9 +362,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(383, 316);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(313, 316);
             this.Name = "formCalc";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
