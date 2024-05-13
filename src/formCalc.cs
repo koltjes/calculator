@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -72,7 +73,7 @@ namespace _calculator
         const int DIV = -6;
         const int ERR = -13;
 
-        bool deg = false;
+        bool isDegMode = false;
         bool engineerNow = false;
 
         Stack st = new Stack();
@@ -339,7 +340,7 @@ namespace _calculator
         }
 
         public decimal Calculate(decimal[] exprInNum)
-        {          
+        {
             decimal Action(decimal oper, decimal a, decimal b)
             {
                 try
@@ -412,7 +413,7 @@ namespace _calculator
             btnDiv.Click += new EventHandler(input_Click);
             btnLeftBr.Click += new EventHandler(input_Click);
             btnRightBr.Click += new EventHandler(input_Click);
-            btnDecSep.Click += new EventHandler(input_Click); 
+            btnDecSep.Click += new EventHandler(input_Click);
             btnDeg.Click += new EventHandler(input_Click);
 
             btnSin.Visible = false;
@@ -456,7 +457,7 @@ namespace _calculator
 
         private void btnEq_Click(object sender, EventArgs e)
         {
-            if (deg)
+            if (isDegMode)
             {
                 try
                 {
@@ -501,7 +502,7 @@ namespace _calculator
             }
         }
 
-        private double InRadians(double angle)
+        private double ConvDegToRadians(double angle)
         {
             angle = angle * Math.PI / 180;
             return angle;
@@ -511,7 +512,7 @@ namespace _calculator
         {
             try
             {
-                double res = Math.Sin(InRadians(Convert.ToDouble(lblExpr.Text)));
+                double res = Math.Sin(ConvDegToRadians(Convert.ToDouble(lblExpr.Text)));
                 lblExpr.Text = res.ToString();
             }
 
@@ -529,7 +530,7 @@ namespace _calculator
         {
             try
             {
-                double res = Math.Cos(InRadians(Convert.ToDouble(lblExpr.Text)));
+                double res = Math.Cos(ConvDegToRadians(Convert.ToDouble(lblExpr.Text)));
                 lblExpr.Text = res.ToString();
             }
 
@@ -581,7 +582,7 @@ namespace _calculator
 
         private void btnDeg_Click(object sender, EventArgs e)
         {
-            deg = true;
+            isDegMode = true;
 
             btnEq.Focus();
         }
@@ -602,19 +603,37 @@ namespace _calculator
                         btn = btn0;
                     }
                     break;
+                case Keys.NumPad0:
+                    btn = btn0;
+                    break;
                 case Keys.D1:
+                    btn = btn1;
+                    break;
+                case Keys.NumPad1:
                     btn = btn1;
                     break;
                 case Keys.D2:
                     btn = btn2;
                     break;
+                case Keys.NumPad2:
+                    btn = btn2;
+                    break;
                 case Keys.D3:
+                    btn = btn3;
+                    break;
+                case Keys.NumPad3:
                     btn = btn3;
                     break;
                 case Keys.D4:
                     btn = btn4;
                     break;
+                case Keys.NumPad4:
+                    btn = btn4;
+                    break;
                 case Keys.D5:
+                    btn = btn5;
+                    break;
+                case Keys.NumPad5:
                     btn = btn5;
                     break;
                 case Keys.D6:
@@ -627,7 +646,13 @@ namespace _calculator
                         btn = btn6;
                     }
                     break;
+                case Keys.NumPad6:
+                    btn = btn6;
+                    break;
                 case Keys.D7:
+                    btn = btn7;
+                    break;
+                case Keys.NumPad7:
                     btn = btn7;
                     break;
                 case Keys.D8:
@@ -640,6 +665,12 @@ namespace _calculator
                         btn = btn8;
                     }
                     break;
+                case Keys.NumPad8:
+                    btn = btn8;
+                    break;
+                case Keys.Multiply:
+                    btn = btnMul;
+                    break;
                 case Keys.D9:
                     if (e.Shift)
                     {
@@ -649,6 +680,9 @@ namespace _calculator
                     {
                         btn = btn9;
                     }
+                    break;
+                case Keys.NumPad9:
+                    btn = btn9;
                     break;
                 case Keys.Oemplus:
                     if (e.Shift)
@@ -660,13 +694,22 @@ namespace _calculator
                         btn = btnEq;
                     }
                     break;
+                case Keys.Add:
+                    btn = btnSum;
+                    break;
                 case Keys.OemMinus:
                     if (!e.Shift)
                     {
                         btn = btnSub;
                     }
                     break;
+                case Keys.Subtract:
+                    btn = btnSub;
+                    break;
                 case Keys.OemQuestion:
+                    btn = btnDiv;
+                    break;
+                case Keys.Divide:
                     btn = btnDiv;
                     break;
                 case Keys.Oemcomma:
@@ -714,7 +757,9 @@ namespace _calculator
                 btnSqrt.Visible = false;
                 btnDeg.Visible = false;
 
+                this.Location = new Point(this.Location.X + 46, this.Location.Y);
                 this.Width = 212;
+
             }
             else
             {
@@ -724,6 +769,7 @@ namespace _calculator
                 btnSqrt.Visible = true;
                 btnDeg.Visible = true;
 
+                this.Location = new Point(this.Location.X - 46, this.Location.Y);
                 this.Width = 258;
             }
 
