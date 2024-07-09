@@ -22,7 +22,7 @@ using System.Windows.Forms;
 
 namespace _calculator
 {
-    public partial class formCalc : Form
+    public partial class FormCalc : Form
     {
         public class Node
         {
@@ -89,279 +89,285 @@ namespace _calculator
         const int DIV = -6;
         const int ERR = -13;
 
-        bool isDegMode = false;
-        bool engineerNow = false;
+        const string ERROR_MESSAGE = "Error";
 
-        Stack st = new Stack();
+        bool isDegreeMode = false;
+        bool isEngineeringMode = false;
 
-        static decimal[] ConvToArray(string expr)
+        Stack stack = new Stack();
+
+        static decimal[] ConvertExpressionToArray(string expressionAsString)
         {
-            decimal[] exprInNum = new decimal[1000];
-            int index = 0;
-            char el;
-            bool prevIsNum = false;
-            bool decSep = false;
-            int numDecPlaces = 0;
+            decimal[] expressionAsArray = new decimal[1000];
+            int indexOfCurrentArrayElement = 0;
+            char currentChar;
+            bool previousCharIsDigit = false;
+            bool isWritingDecimalPlacesMode = false;
+            int countDecimalPlaces = 0;
 
-            for (int indExp = 0; indExp < expr.Length; indExp++)
+            for (int indexOfCurrentChar = 0; indexOfCurrentChar < expressionAsString.Length; indexOfCurrentChar++)
             {
-                el = expr[indExp];
+                currentChar = expressionAsString[indexOfCurrentChar];
 
-                switch (el)
+                switch (currentChar)
                 {
                     case '(':
-                        if (prevIsNum)
+                        if (previousCharIsDigit)
                         {
-                            index += 1;
+                            indexOfCurrentArrayElement += 1;
                         }
-                        exprInNum[index] = LEFT;
-                        index += 1;
-                        prevIsNum = false;
+                        expressionAsArray[indexOfCurrentArrayElement] = LEFT;
+                        indexOfCurrentArrayElement += 1;
+                        previousCharIsDigit = false;
                         break;
 
                     case ')':
-                        if (prevIsNum)
+                        if (previousCharIsDigit)
                         {
-                            index += 1;
+                            indexOfCurrentArrayElement += 1;
                         }
-                        exprInNum[index] = RIGHT;
-                        index += 1;
-                        prevIsNum = false;
+                        expressionAsArray[indexOfCurrentArrayElement] = RIGHT;
+                        indexOfCurrentArrayElement += 1;
+                        previousCharIsDigit = false;
                         break;
 
                     case '+':
-                        if (prevIsNum)
+                        if (previousCharIsDigit)
                         {
-                            index += 1;
+                            indexOfCurrentArrayElement += 1;
                         }
-                        exprInNum[index] = ADD;
-                        index += 1;
-                        prevIsNum = false;
+                        expressionAsArray[indexOfCurrentArrayElement] = ADD;
+                        indexOfCurrentArrayElement += 1;
+                        previousCharIsDigit = false;
                         break;
 
                     case '-':
-                        if (prevIsNum)
+                        if (previousCharIsDigit)
                         {
-                            index += 1;
+                            indexOfCurrentArrayElement += 1;
                         }
-                        exprInNum[index] = SUB;
-                        index += 1;
-                        prevIsNum = false;
+                        expressionAsArray[indexOfCurrentArrayElement] = SUB;
+                        indexOfCurrentArrayElement += 1;
+                        previousCharIsDigit = false;
                         break;
 
                     case '*':
-                        if (prevIsNum)
+                        if (previousCharIsDigit)
                         {
-                            index += 1;
+                            indexOfCurrentArrayElement += 1;
                         }
-                        exprInNum[index] = MUL;
-                        index += 1;
-                        prevIsNum = false;
+                        expressionAsArray[indexOfCurrentArrayElement] = MUL;
+                        indexOfCurrentArrayElement += 1;
+                        previousCharIsDigit = false;
                         break;
 
                     case '/':
-                        if (prevIsNum)
+                        if (previousCharIsDigit)
                         {
-                            index += 1;
+                            indexOfCurrentArrayElement += 1;
                         }
-                        exprInNum[index] = DIV;
-                        index += 1;
-                        prevIsNum = false;
+                        expressionAsArray[indexOfCurrentArrayElement] = DIV;
+                        indexOfCurrentArrayElement += 1;
+                        previousCharIsDigit = false;
                         break;
 
                     default:
-                        if (char.IsDigit(el))
+                        if (char.IsDigit(currentChar))
                         {
-                            if (decSep)
+                            if (isWritingDecimalPlacesMode)
                             {
-                                numDecPlaces++;
+                                countDecimalPlaces++;
                             }
 
-                            if (exprInNum[index] == 0)
+                            if (expressionAsArray[indexOfCurrentArrayElement] == 0)
                             {
-                                exprInNum[index] = int.Parse(Convert.ToString(el));
-                                prevIsNum = true;
+                                expressionAsArray[indexOfCurrentArrayElement] = int.Parse(Convert.ToString(currentChar));
+                                previousCharIsDigit = true;
                             }
 
                             else
                             {
-                                exprInNum[index] = exprInNum[index] * 10 + int.Parse(Convert.ToString(el));
+                                expressionAsArray[indexOfCurrentArrayElement] = expressionAsArray[indexOfCurrentArrayElement] * 10 
+                                    + int.Parse(Convert.ToString(currentChar));
                             }
                         }
 
-                        if (el == ',')
+                        if (currentChar == ',')
                         {
-                            decSep = true;
+                            isWritingDecimalPlacesMode = true;
                         }
 
-                        if ((indExp == expr.Length - 1 || !char.IsDigit(expr[indExp + 1])) && decSep)
+                        if ((indexOfCurrentChar == expressionAsString.Length - 1 || !char.IsDigit(expressionAsString[indexOfCurrentChar + 1])) 
+                            && isWritingDecimalPlacesMode)
                         {
-                            exprInNum[index] /= (decimal)Math.Pow(10, numDecPlaces);
-                            numDecPlaces = 0;
-                            decSep = false;
+                            expressionAsArray[indexOfCurrentArrayElement] /= (decimal)Math.Pow(10, countDecimalPlaces);
+                            countDecimalPlaces = 0;
+                            isWritingDecimalPlacesMode = false;
                         }
 
                         break;
                 }
             }
 
-            if (prevIsNum)
+            if (previousCharIsDigit)
             {
-                index += 1;
+                indexOfCurrentArrayElement += 1;
             }
 
-            Array.Resize(ref exprInNum, index);
+            Array.Resize(ref expressionAsArray, indexOfCurrentArrayElement);
 
-            return exprInNum;
+            return expressionAsArray;
         }
 
-        public bool Correctness(decimal[] exprInNum)
+        public bool CheckCorrectness(decimal[] expressionAsArray)
         {
-            int index = 0;
-            bool correct = true;
+            int currentIndex = 0;
+            bool isCorrect = true;
 
-            while (index < exprInNum.Length && correct)
+            while (currentIndex < expressionAsArray.Length && isCorrect)
             {
-                if (exprInNum[index] == LEFT)
+                if (expressionAsArray[currentIndex] == LEFT)
                 {
-                    st.Push(LEFT);
+                    stack.Push(LEFT);
                 }
 
-                if (exprInNum[index] == RIGHT)
+                if (expressionAsArray[currentIndex] == RIGHT)
                 {
-                    if (st.top != null && st.top.element == LEFT)
+                    if (stack.top != null && stack.top.element == LEFT)
                     {
-                        st.Pop();
+                        stack.Pop();
                     }
 
                     else
                     {
-                        correct = false;
+                        isCorrect = false;
                     }
                 }
 
-                if (index == 0 && !(exprInNum[index] >= -1))
+                if (currentIndex == 0 && !(expressionAsArray[currentIndex] >= -1))
                 {
-                    correct = false;
+                    isCorrect = false;
                     break;
                 }
 
-                switch (exprInNum[index])
+                switch (expressionAsArray[currentIndex])
                 {
                     case LEFT:
-                        if (!(index < exprInNum.Length - 2 && ((exprInNum[index + 1] >= 0 && exprInNum[index + 2] <= ADD) | exprInNum[index + 1] == LEFT)))
+                        if (!(currentIndex < expressionAsArray.Length - 2 && ((expressionAsArray[currentIndex + 1] >= 0 
+                            && expressionAsArray[currentIndex + 2] <= ADD) | expressionAsArray[currentIndex + 1] == LEFT)))
                         {
-                            correct = false;
+                            isCorrect = false;
                         }
                         break;
                     case RIGHT:
-                        if (!((index < exprInNum.Length - 1 && exprInNum[index + 1] <= RIGHT) | index == exprInNum.Length - 1))
+                        if (!((currentIndex < expressionAsArray.Length - 1 && expressionAsArray[currentIndex + 1] <= RIGHT) 
+                            | currentIndex == expressionAsArray.Length - 1))
                         {
-                            correct = false;
+                            isCorrect = false;
                         }
                         break;
                     default:
-                        if (exprInNum[index] <= -3)
+                        if (expressionAsArray[currentIndex] <= -3)
                         {
-                            if (!(index < exprInNum.Length - 1 && exprInNum[index + 1] >= LEFT))
+                            if (!(currentIndex < expressionAsArray.Length - 1 && expressionAsArray[currentIndex + 1] >= LEFT))
                             {
-                                correct = false;
+                                isCorrect = false;
                             }
                         }
 
-                        if (exprInNum[index] >= 0)
+                        if (expressionAsArray[currentIndex] >= 0)
                         {
-                            if (index < exprInNum.Length - 1 && exprInNum[index + 1] == LEFT)
+                            if (currentIndex < expressionAsArray.Length - 1 && expressionAsArray[currentIndex + 1] == LEFT)
                             {
-                                correct = false;
+                                isCorrect = false;
                             }
                         }
                         break;
                 }
 
-                index++;
+                currentIndex++;
             }
 
-            if (st.top != null)
+            if (stack.top != null)
             {
-                correct = false;
+                isCorrect = false;
             }
 
-            if (!correct)
+            if (!isCorrect)
             {
-                lblExpr.Text = "Error";
+                lblExpression.Text = ERROR_MESSAGE;
             }
 
-            return correct;
+            return isCorrect;
         }
 
-        public decimal[] ConvertToPolish(decimal[] exprInNum)
+        public decimal[] ConvertToReversePolishNotation(decimal[] expressionAsArray)
         {
-            int index = 0;
-            int indexPolish = 0;
+            int indexOfCurrentCharInArray = 0;
+            int currentIndexInPolishNotation = 0;
 
-            while (index < exprInNum.Length)
+            while (indexOfCurrentCharInArray < expressionAsArray.Length)
             {
-                if (exprInNum[index] >= 0)
+                if (expressionAsArray[indexOfCurrentCharInArray] >= 0)
                 {
-                    exprInNum[indexPolish] = exprInNum[index];
-                    indexPolish++;
+                    expressionAsArray[currentIndexInPolishNotation] = expressionAsArray[indexOfCurrentCharInArray];
+                    currentIndexInPolishNotation++;
                 }
 
                 else
                 {
-                    if (exprInNum[index] == LEFT)
+                    if (expressionAsArray[indexOfCurrentCharInArray] == LEFT)
                     {
-                        st.Push(exprInNum[index]);
+                        stack.Push(expressionAsArray[indexOfCurrentCharInArray]);
                     }
 
                     else
                     {
-                        if (exprInNum[index] == RIGHT)
+                        if (expressionAsArray[indexOfCurrentCharInArray] == RIGHT)
                         {
-                            while (st.top.element != LEFT)
+                            while (stack.top.element != LEFT)
                             {
-                                exprInNum[indexPolish] = Convert.ToInt32(st.Pop());
-                                indexPolish++;
+                                expressionAsArray[currentIndexInPolishNotation] = Convert.ToInt32(stack.Pop());
+                                currentIndexInPolishNotation++;
                             }
 
-                            st.Pop();
+                            stack.Pop();
                         }
 
                         else
                         {
-                            while (st.top != null && st.top.element <= exprInNum[index])
+                            while (stack.top != null && stack.top.element <= expressionAsArray[indexOfCurrentCharInArray])
                             {
-                                exprInNum[indexPolish] = Convert.ToInt32(st.Pop());
-                                indexPolish++;
+                                expressionAsArray[currentIndexInPolishNotation] = Convert.ToInt32(stack.Pop());
+                                currentIndexInPolishNotation++;
                             }
 
-                            st.Push(exprInNum[index]);
+                            stack.Push(expressionAsArray[indexOfCurrentCharInArray]);
                         }
                     }
                 }
 
-                index++;
+                indexOfCurrentCharInArray++;
             }
 
-            while (st.top != null)
+            while (stack.top != null)
             {
-                exprInNum[indexPolish] = Convert.ToInt32(st.Pop());
-                indexPolish++;
+                expressionAsArray[currentIndexInPolishNotation] = Convert.ToInt32(stack.Pop());
+                currentIndexInPolishNotation++;
             }
 
-            Array.Resize(ref exprInNum, indexPolish);
+            Array.Resize(ref expressionAsArray, currentIndexInPolishNotation);
 
-            return exprInNum;
+            return expressionAsArray;
         }
 
-        public decimal Calculate(decimal[] exprInNum)
+        public decimal CalculateExpression(decimal[] expressionAsArray)
         {
-            decimal Action(decimal oper, decimal a, decimal b)
+            decimal PerformOperation(decimal arithmeticOperator, decimal a, decimal b)
             {
                 try
                 {
-                    switch (oper)
+                    switch (arithmeticOperator)
                     {
                         case ADD: return a + b;
                         case SUB: return a - b;
@@ -377,41 +383,41 @@ namespace _calculator
                 }
             }
 
-            decimal res = ERR;
-            int index = 0;
-            decimal op1;
-            decimal op2;
+            decimal result = ERR;
+            int currentIndex = 0;
+            decimal firstOperand;
+            decimal secondOperand;
 
-            while (index < exprInNum.Length)
+            while (currentIndex < expressionAsArray.Length)
             {
-                if (exprInNum[index] >= 0)
+                if (expressionAsArray[currentIndex] >= 0)
                 {
-                    st.Push(exprInNum[index]);
+                    stack.Push(expressionAsArray[currentIndex]);
                 }
 
                 else
                 {
-                    op2 = Convert.ToDecimal(st.Pop());
-                    op1 = Convert.ToDecimal(st.Pop());
+                    secondOperand = Convert.ToDecimal(stack.Pop());
+                    firstOperand = Convert.ToDecimal(stack.Pop());
 
-                    res = Action(exprInNum[index], op1, op2);
-                    st.Push(res);
+                    result = PerformOperation(expressionAsArray[currentIndex], firstOperand, secondOperand);
+                    stack.Push(result);
                 }
 
-                index++;
+                currentIndex++;
             }
 
-            st.Pop();
+            stack.Pop();
 
-            return res;
+            return result;
         }
 
-        public formCalc()
+        public FormCalc()
         {
             InitializeComponent();
         }
 
-        private void formCalc_Load(object sender, EventArgs e)
+        private void FormCalc_Load(object sender, EventArgs e)
         {
             btn0.Click += new EventHandler(input_Click);
             btn1.Click += new EventHandler(input_Click);
@@ -423,122 +429,123 @@ namespace _calculator
             btn7.Click += new EventHandler(input_Click);
             btn8.Click += new EventHandler(input_Click);
             btn9.Click += new EventHandler(input_Click);
-            btnSum.Click += new EventHandler(input_Click);
-            btnSub.Click += new EventHandler(input_Click);
-            btnMul.Click += new EventHandler(input_Click);
-            btnDiv.Click += new EventHandler(input_Click);
-            btnLeftBr.Click += new EventHandler(input_Click);
-            btnRightBr.Click += new EventHandler(input_Click);
-            btnDecSep.Click += new EventHandler(input_Click);
-            btnDeg.Click += new EventHandler(input_Click);
+            btnAddition.Click += new EventHandler(input_Click);
+            btnSubtraction.Click += new EventHandler(input_Click);
+            btnMultiplication.Click += new EventHandler(input_Click);
+            btnDivision.Click += new EventHandler(input_Click);
+            btnLeftBracket.Click += new EventHandler(input_Click);
+            btnRightBracket.Click += new EventHandler(input_Click);
+            btnDecimalSeparator.Click += new EventHandler(input_Click);
+            btnDegree.Click += new EventHandler(input_Click);
 
             btnSin.Visible = false;
             btnCos.Visible = false;
             btnLn.Visible = false;
-            btnSqrt.Visible = false;
-            btnDeg.Visible = false;
+            btnSquareRoot.Visible = false;
+            btnDegree.Visible = false;
 
             this.Width = 212;
         }
 
         private void input_Click(object sender, EventArgs e)
         {
-            var btnNum = (Button)sender;
+            var clickedButton = (Button)sender;
 
-            if ((lblExpr.Text == "0" || lblExpr.Text == "Error") && btnNum.Text != "," && btnNum.Text != "^")
+            if ((lblExpression.Text == "0" || lblExpression.Text == ERROR_MESSAGE) 
+                && clickedButton.Text != "," && clickedButton.Text != "^")
             {
-                lblExpr.Text = btnNum.Text;
+                lblExpression.Text = clickedButton.Text;
             }
             else
             {
-                lblExpr.Text += btnNum.Text;
+                lblExpression.Text += clickedButton.Text;
             }
 
-            btnEq.Focus();
+            btnEquals.Focus();
         }
 
-        private void btnBackSp_Click(object sender, EventArgs e)
+        private void btnBackSpace_Click(object sender, EventArgs e)
         {
-            if (lblExpr.Text.Length > 1 && lblExpr.Text != "Error")
+            if (lblExpression.Text.Length > 1 && lblExpression.Text != ERROR_MESSAGE)
             {
-                lblExpr.Text = lblExpr.Text.Remove(lblExpr.Text.Length - 1);
+                lblExpression.Text = lblExpression.Text.Remove(lblExpression.Text.Length - 1);
             }
             else
             {
-                lblExpr.Text = "0";
+                lblExpression.Text = "0";
             }
 
-            btnEq.Focus();
+            btnEquals.Focus();
         }
 
-        private void btnEq_Click(object sender, EventArgs e)
+        private void btnEquals_Click(object sender, EventArgs e)
         {
-            if (isDegMode)
+            if (isDegreeMode)
             {
                 try
                 {
-                    double[] degr = lblExpr.Text.Split('^').Select(double.Parse).ToArray();
+                    double[] operands = lblExpression.Text.Split('^').Select(double.Parse).ToArray();
 
-                    if (degr.Length == 2)
+                    if (operands.Length == 2)
                     {
-                        double res = Math.Pow(degr[0], degr[1]);
-                        lblExpr.Text = res.ToString();
+                        double result = Math.Pow(operands[0], operands[1]);
+                        lblExpression.Text = result.ToString();
                     }
                     else
                     {
-                        lblExpr.Text = "Error";
+                        lblExpression.Text = ERROR_MESSAGE;
                     }
                 }
 
                 catch
                 {
-                    lblExpr.Text = "Error";
+                    lblExpression.Text = ERROR_MESSAGE;
                 }
 
             }
             else
             {
-                decimal[] exprInNum = ConvToArray(lblExpr.Text);
+                decimal[] expressionAsArray = ConvertExpressionToArray(lblExpression.Text);
 
-                if (Correctness(exprInNum))
+                if (CheckCorrectness(expressionAsArray))
                 {
-                    exprInNum = ConvertToPolish(exprInNum);
+                    expressionAsArray = ConvertToReversePolishNotation(expressionAsArray);
 
-                    decimal res = Calculate(exprInNum);
+                    decimal result = CalculateExpression(expressionAsArray);
 
-                    if (res != ERR)
+                    if (result != ERR)
                     {
-                        lblExpr.Text = res.ToString();
+                        lblExpression.Text = result.ToString();
                     }
                     else
                     {
-                        lblExpr.Text = "Error";
+                        lblExpression.Text = ERROR_MESSAGE;
                     }
                 }
             }
         }
 
-        private double ConvDegToRadians(double angle)
+        private double ConvertDegreesToRadians(double angleInDegrees)
         {
-            angle = angle * Math.PI / 180;
-            return angle;
+            return angleInDegrees * Math.PI / 180;
         }
 
         private void btnSin_Click(object sender, EventArgs e)
         {
             try
             {
-                double res = Math.Sin(ConvDegToRadians(Convert.ToDouble(lblExpr.Text)));
-                lblExpr.Text = res.ToString();
+                double result = Math.Sin(ConvertDegreesToRadians(Convert.ToDouble(lblExpression.Text)));
+                lblExpression.Text = result.ToString();
             }
 
             catch
             {
-                lblExpr.Text = "Error";
+                lblExpression.Text = ERROR_MESSAGE;
             }
+
             finally
             {
-                btnEq.Focus();
+                btnEquals.Focus();
             }
         }
 
@@ -546,17 +553,18 @@ namespace _calculator
         {
             try
             {
-                double res = Math.Cos(ConvDegToRadians(Convert.ToDouble(lblExpr.Text)));
-                lblExpr.Text = res.ToString();
+                double result = Math.Cos(ConvertDegreesToRadians(Convert.ToDouble(lblExpression.Text)));
+                lblExpression.Text = result.ToString();
             }
 
             catch
             {
-                lblExpr.Text = "Error";
+                lblExpression.Text = ERROR_MESSAGE;
             }
+
             finally
             {
-                btnEq.Focus();
+                btnEquals.Focus();
             }
         }
 
@@ -564,216 +572,220 @@ namespace _calculator
         {
             try
             {
-                double res = Math.Log(Convert.ToDouble(lblExpr.Text));
-                lblExpr.Text = res.ToString();
+                double result = Math.Log(Convert.ToDouble(lblExpression.Text));
+                lblExpression.Text = result.ToString();
             }
 
             catch
             {
-                lblExpr.Text = "Error";
+                lblExpression.Text = ERROR_MESSAGE;
             }
+
             finally
             {
-                btnEq.Focus();
+                btnEquals.Focus();
             }
         }
 
-        private void btnSqrt_Click(object sender, EventArgs e)
+        private void btnSquareRoot_Click(object sender, EventArgs e)
         {
             try
             {
-                double res = Math.Sqrt(Convert.ToDouble(lblExpr.Text));
-                lblExpr.Text = res.ToString();
+                double result = Math.Sqrt(Convert.ToDouble(lblExpression.Text));
+                lblExpression.Text = result.ToString();
             }
 
             catch
             {
-                lblExpr.Text = "Error";
+                lblExpression.Text = ERROR_MESSAGE;
             }
+
             finally
             {
-                btnEq.Focus();
+                btnEquals.Focus();
             }
         }
 
-        private void btnDeg_Click(object sender, EventArgs e)
+        private void btnDegree_Click(object sender, EventArgs e)
         {
-            isDegMode = true;
+            isDegreeMode = true;
 
-            btnEq.Focus();
+            btnEquals.Focus();
         }
 
-        private void formCalc_KeyDown(object sender, KeyEventArgs e)
+        private void FormCalc_KeyDown(object sender, KeyEventArgs e)
         {
-            Button btn = null;
+            Button clickedButton = null;
 
             switch (e.KeyCode)
             {
                 case Keys.D0:
                     if (e.Shift)
                     {
-                        btn = btnRightBr;
+                        clickedButton = btnRightBracket;
                     }
                     else
                     {
-                        btn = btn0;
+                        clickedButton = btn0;
                     }
                     break;
                 case Keys.NumPad0:
-                    btn = btn0;
+                    clickedButton = btn0;
                     break;
                 case Keys.D1:
-                    btn = btn1;
+                    clickedButton = btn1;
                     break;
                 case Keys.NumPad1:
-                    btn = btn1;
+                    clickedButton = btn1;
                     break;
                 case Keys.D2:
-                    btn = btn2;
+                    clickedButton = btn2;
                     break;
                 case Keys.NumPad2:
-                    btn = btn2;
+                    clickedButton = btn2;
                     break;
                 case Keys.D3:
-                    btn = btn3;
+                    clickedButton = btn3;
                     break;
                 case Keys.NumPad3:
-                    btn = btn3;
+                    clickedButton = btn3;
                     break;
                 case Keys.D4:
-                    btn = btn4;
+                    clickedButton = btn4;
                     break;
                 case Keys.NumPad4:
-                    btn = btn4;
+                    clickedButton = btn4;
                     break;
                 case Keys.D5:
-                    btn = btn5;
+                    clickedButton = btn5;
                     break;
                 case Keys.NumPad5:
-                    btn = btn5;
+                    clickedButton = btn5;
                     break;
                 case Keys.D6:
                     if (e.Shift)
                     {
-                        btn = btnDeg;
+                        clickedButton = btnDegree;
                     }
                     else
                     {
-                        btn = btn6;
+                        clickedButton = btn6;
                     }
                     break;
                 case Keys.NumPad6:
-                    btn = btn6;
+                    clickedButton = btn6;
                     break;
                 case Keys.D7:
-                    btn = btn7;
+                    clickedButton = btn7;
                     break;
                 case Keys.NumPad7:
-                    btn = btn7;
+                    clickedButton = btn7;
                     break;
                 case Keys.D8:
                     if (e.Shift)
                     {
-                        btn = btnMul;
+                        clickedButton = btnMultiplication;
                     }
                     else
                     {
-                        btn = btn8;
+                        clickedButton = btn8;
                     }
                     break;
                 case Keys.NumPad8:
-                    btn = btn8;
+                    clickedButton = btn8;
                     break;
                 case Keys.Multiply:
-                    btn = btnMul;
+                    clickedButton = btnMultiplication;
                     break;
                 case Keys.D9:
                     if (e.Shift)
                     {
-                        btn = btnLeftBr;
+                        clickedButton = btnLeftBracket;
                     }
                     else
                     {
-                        btn = btn9;
+                        clickedButton = btn9;
                     }
                     break;
                 case Keys.NumPad9:
-                    btn = btn9;
+                    clickedButton = btn9;
                     break;
                 case Keys.Oemplus:
                     if (e.Shift)
                     {
-                        btn = btnSum;
+                        clickedButton = btnAddition;
                     }
                     else
                     {
-                        btn = btnEq;
+                        clickedButton = btnEquals;
                     }
                     break;
                 case Keys.Add:
-                    btn = btnSum;
+                    clickedButton = btnAddition;
                     break;
                 case Keys.OemMinus:
                     if (!e.Shift)
                     {
-                        btn = btnSub;
+                        clickedButton = btnSubtraction;
                     }
                     break;
                 case Keys.Subtract:
-                    btn = btnSub;
+                    clickedButton = btnSubtraction;
                     break;
                 case Keys.OemQuestion:
-                    btn = btnDiv;
+                    clickedButton = btnDivision;
                     break;
                 case Keys.Divide:
-                    btn = btnDiv;
+                    clickedButton = btnDivision;
                     break;
                 case Keys.Oemcomma:
-                    btn = btnDecSep;
+                    clickedButton = btnDecimalSeparator;
                     break;
                 case Keys.S:
-                    btn = btnSin;
+                    clickedButton = btnSin;
                     break;
                 case Keys.C:
-                    btn = btnCos;
+                    clickedButton = btnCos;
                     break;
                 case Keys.L:
-                    btn = btnLn;
+                    clickedButton = btnLn;
                     break;
                 case Keys.R:
-                    btn = btnSqrt;
+                    clickedButton = btnSquareRoot;
                     break;
                 case Keys.Back:
-                    btn = btnBackSp;
+                    clickedButton = btnBackSpace;
                     break;
                 case Keys.Enter:
-                    btn = btnEq;
+                    clickedButton = btnEquals;
                     break;
 
             }
 
-            if (btn != null)
+            if (clickedButton != null)
             {
-                btn.PerformClick();
+                clickedButton.PerformClick();
             }
         }
 
-        private void formCalc_Shown(object sender, EventArgs e)
+        private void FormCalc_Shown(object sender, EventArgs e)
         {
-            btnEq.Focus();
+            btnEquals.Focus();
         }
 
         private void btnSwitch_Click(object sender, EventArgs e)
         {
-            if (engineerNow)
+            const int OFFSET = 46;
+
+            if (isEngineeringMode)
             {
                 btnSin.Visible = false;
                 btnCos.Visible = false;
                 btnLn.Visible = false;
-                btnSqrt.Visible = false;
-                btnDeg.Visible = false;
+                btnSquareRoot.Visible = false;
+                btnDegree.Visible = false;
 
-                this.Location = new Point(this.Location.X + 46, this.Location.Y);
+                this.Location = new Point(this.Location.X + OFFSET, this.Location.Y);
                 this.Width = 212;
 
             }
@@ -782,15 +794,15 @@ namespace _calculator
                 btnSin.Visible = true;
                 btnCos.Visible = true;
                 btnLn.Visible = true;
-                btnSqrt.Visible = true;
-                btnDeg.Visible = true;
+                btnSquareRoot.Visible = true;
+                btnDegree.Visible = true;
 
-                this.Location = new Point(this.Location.X - 46, this.Location.Y);
+                this.Location = new Point(this.Location.X - OFFSET, this.Location.Y);
                 this.Width = 258;
             }
 
-            engineerNow = !engineerNow;
-            btnEq.Focus();
+            isEngineeringMode = !isEngineeringMode;
+            btnEquals.Focus();
         }
     }
 }

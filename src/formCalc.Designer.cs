@@ -1,6 +1,6 @@
 ﻿namespace _calculator
 {
-    partial class formCalc
+    partial class FormCalc
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -28,43 +28,43 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnMul = new System.Windows.Forms.Button();
+            this.btnMultiplication = new System.Windows.Forms.Button();
             this.btn2 = new System.Windows.Forms.Button();
             this.btn9 = new System.Windows.Forms.Button();
-            this.btnEq = new System.Windows.Forms.Button();
+            this.btnEquals = new System.Windows.Forms.Button();
             this.btn7 = new System.Windows.Forms.Button();
-            this.btnSum = new System.Windows.Forms.Button();
-            this.btnLeftBr = new System.Windows.Forms.Button();
+            this.btnAddition = new System.Windows.Forms.Button();
+            this.btnLeftBracket = new System.Windows.Forms.Button();
             this.btn3 = new System.Windows.Forms.Button();
             this.btn0 = new System.Windows.Forms.Button();
             this.btn4 = new System.Windows.Forms.Button();
             this.btn5 = new System.Windows.Forms.Button();
-            this.btnSub = new System.Windows.Forms.Button();
+            this.btnSubtraction = new System.Windows.Forms.Button();
             this.btn1 = new System.Windows.Forms.Button();
             this.btn6 = new System.Windows.Forms.Button();
             this.btn8 = new System.Windows.Forms.Button();
             this.btnSwitch = new System.Windows.Forms.Button();
-            this.btnDecSep = new System.Windows.Forms.Button();
-            this.btnRightBr = new System.Windows.Forms.Button();
-            this.btnBackSp = new System.Windows.Forms.Button();
-            this.btnDiv = new System.Windows.Forms.Button();
+            this.btnDecimalSeparator = new System.Windows.Forms.Button();
+            this.btnRightBracket = new System.Windows.Forms.Button();
+            this.btnBackSpace = new System.Windows.Forms.Button();
+            this.btnDivision = new System.Windows.Forms.Button();
             this.btnLn = new System.Windows.Forms.Button();
             this.btnCos = new System.Windows.Forms.Button();
             this.btnSin = new System.Windows.Forms.Button();
-            this.btnDeg = new System.Windows.Forms.Button();
-            this.btnSqrt = new System.Windows.Forms.Button();
-            this.lblExpr = new System.Windows.Forms.Label();
+            this.btnDegree = new System.Windows.Forms.Button();
+            this.btnSquareRoot = new System.Windows.Forms.Button();
+            this.lblExpression = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // btnMul
+            // btnMultiplication
             // 
-            this.btnMul.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMul.Location = new System.Drawing.Point(287, 94);
-            this.btnMul.Name = "btnMul";
-            this.btnMul.Size = new System.Drawing.Size(63, 34);
-            this.btnMul.TabIndex = 0;
-            this.btnMul.Text = "*";
-            this.btnMul.UseVisualStyleBackColor = true;
+            this.btnMultiplication.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnMultiplication.Location = new System.Drawing.Point(287, 94);
+            this.btnMultiplication.Name = "btnMultiplication";
+            this.btnMultiplication.Size = new System.Drawing.Size(63, 34);
+            this.btnMultiplication.TabIndex = 0;
+            this.btnMultiplication.Text = "*";
+            this.btnMultiplication.UseVisualStyleBackColor = true;
             // 
             // btn2
             // 
@@ -86,16 +86,16 @@
             this.btn9.Text = "9";
             this.btn9.UseVisualStyleBackColor = true;
             // 
-            // btnEq
+            // btnEquals
             // 
-            this.btnEq.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnEq.Location = new System.Drawing.Point(287, 214);
-            this.btnEq.Name = "btnEq";
-            this.btnEq.Size = new System.Drawing.Size(63, 34);
-            this.btnEq.TabIndex = 3;
-            this.btnEq.Text = "=";
-            this.btnEq.UseVisualStyleBackColor = true;
-            this.btnEq.Click += new System.EventHandler(this.btnEq_Click);
+            this.btnEquals.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEquals.Location = new System.Drawing.Point(287, 214);
+            this.btnEquals.Name = "btnEquals";
+            this.btnEquals.Size = new System.Drawing.Size(63, 34);
+            this.btnEquals.TabIndex = 3;
+            this.btnEquals.Text = "=";
+            this.btnEquals.UseVisualStyleBackColor = true;
+            this.btnEquals.Click += new System.EventHandler(this.btnEquals_Click);
             // 
             // btn7
             // 
@@ -107,25 +107,25 @@
             this.btn7.Text = "7";
             this.btn7.UseVisualStyleBackColor = true;
             // 
-            // btnSum
+            // btnAddition
             // 
-            this.btnSum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSum.Location = new System.Drawing.Point(287, 174);
-            this.btnSum.Name = "btnSum";
-            this.btnSum.Size = new System.Drawing.Size(63, 34);
-            this.btnSum.TabIndex = 5;
-            this.btnSum.Text = "+";
-            this.btnSum.UseVisualStyleBackColor = true;
+            this.btnAddition.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddition.Location = new System.Drawing.Point(287, 174);
+            this.btnAddition.Name = "btnAddition";
+            this.btnAddition.Size = new System.Drawing.Size(63, 34);
+            this.btnAddition.TabIndex = 5;
+            this.btnAddition.Text = "+";
+            this.btnAddition.UseVisualStyleBackColor = true;
             // 
-            // btnLeftBr
+            // btnLeftBracket
             // 
-            this.btnLeftBr.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLeftBr.Location = new System.Drawing.Point(80, 54);
-            this.btnLeftBr.Name = "btnLeftBr";
-            this.btnLeftBr.Size = new System.Drawing.Size(63, 34);
-            this.btnLeftBr.TabIndex = 6;
-            this.btnLeftBr.Text = "(";
-            this.btnLeftBr.UseVisualStyleBackColor = true;
+            this.btnLeftBracket.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLeftBracket.Location = new System.Drawing.Point(80, 54);
+            this.btnLeftBracket.Name = "btnLeftBracket";
+            this.btnLeftBracket.Size = new System.Drawing.Size(63, 34);
+            this.btnLeftBracket.TabIndex = 6;
+            this.btnLeftBracket.Text = "(";
+            this.btnLeftBracket.UseVisualStyleBackColor = true;
             // 
             // btn3
             // 
@@ -167,15 +167,15 @@
             this.btn5.Text = "5";
             this.btn5.UseVisualStyleBackColor = true;
             // 
-            // btnSub
+            // btnSubtraction
             // 
-            this.btnSub.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSub.Location = new System.Drawing.Point(287, 134);
-            this.btnSub.Name = "btnSub";
-            this.btnSub.Size = new System.Drawing.Size(63, 34);
-            this.btnSub.TabIndex = 11;
-            this.btnSub.Text = "-";
-            this.btnSub.UseVisualStyleBackColor = true;
+            this.btnSubtraction.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSubtraction.Location = new System.Drawing.Point(287, 134);
+            this.btnSubtraction.Name = "btnSubtraction";
+            this.btnSubtraction.Size = new System.Drawing.Size(63, 34);
+            this.btnSubtraction.TabIndex = 11;
+            this.btnSubtraction.Text = "-";
+            this.btnSubtraction.UseVisualStyleBackColor = true;
             // 
             // btn1
             // 
@@ -219,46 +219,46 @@
             this.btnSwitch.UseVisualStyleBackColor = true;
             this.btnSwitch.Click += new System.EventHandler(this.btnSwitch_Click);
             // 
-            // btnDecSep
+            // btnDecimalSeparator
             // 
-            this.btnDecSep.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDecSep.Location = new System.Drawing.Point(218, 214);
-            this.btnDecSep.Name = "btnDecSep";
-            this.btnDecSep.Size = new System.Drawing.Size(63, 34);
-            this.btnDecSep.TabIndex = 16;
-            this.btnDecSep.Text = ",";
-            this.btnDecSep.UseVisualStyleBackColor = true;
+            this.btnDecimalSeparator.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDecimalSeparator.Location = new System.Drawing.Point(218, 214);
+            this.btnDecimalSeparator.Name = "btnDecimalSeparator";
+            this.btnDecimalSeparator.Size = new System.Drawing.Size(63, 34);
+            this.btnDecimalSeparator.TabIndex = 16;
+            this.btnDecimalSeparator.Text = ",";
+            this.btnDecimalSeparator.UseVisualStyleBackColor = true;
             // 
-            // btnRightBr
+            // btnRightBracket
             // 
-            this.btnRightBr.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRightBr.Location = new System.Drawing.Point(149, 54);
-            this.btnRightBr.Name = "btnRightBr";
-            this.btnRightBr.Size = new System.Drawing.Size(63, 34);
-            this.btnRightBr.TabIndex = 17;
-            this.btnRightBr.Text = ")";
-            this.btnRightBr.UseVisualStyleBackColor = true;
+            this.btnRightBracket.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRightBracket.Location = new System.Drawing.Point(149, 54);
+            this.btnRightBracket.Name = "btnRightBracket";
+            this.btnRightBracket.Size = new System.Drawing.Size(63, 34);
+            this.btnRightBracket.TabIndex = 17;
+            this.btnRightBracket.Text = ")";
+            this.btnRightBracket.UseVisualStyleBackColor = true;
             // 
-            // btnBackSp
+            // btnBackSpace
             // 
-            this.btnBackSp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnBackSp.Location = new System.Drawing.Point(218, 54);
-            this.btnBackSp.Name = "btnBackSp";
-            this.btnBackSp.Size = new System.Drawing.Size(63, 34);
-            this.btnBackSp.TabIndex = 18;
-            this.btnBackSp.Text = "←";
-            this.btnBackSp.UseVisualStyleBackColor = true;
-            this.btnBackSp.Click += new System.EventHandler(this.btnBackSp_Click);
+            this.btnBackSpace.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBackSpace.Location = new System.Drawing.Point(218, 54);
+            this.btnBackSpace.Name = "btnBackSpace";
+            this.btnBackSpace.Size = new System.Drawing.Size(63, 34);
+            this.btnBackSpace.TabIndex = 18;
+            this.btnBackSpace.Text = "←";
+            this.btnBackSpace.UseVisualStyleBackColor = true;
+            this.btnBackSpace.Click += new System.EventHandler(this.btnBackSpace_Click);
             // 
-            // btnDiv
+            // btnDivision
             // 
-            this.btnDiv.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDiv.Location = new System.Drawing.Point(287, 54);
-            this.btnDiv.Name = "btnDiv";
-            this.btnDiv.Size = new System.Drawing.Size(63, 34);
-            this.btnDiv.TabIndex = 19;
-            this.btnDiv.Text = "/";
-            this.btnDiv.UseVisualStyleBackColor = true;
+            this.btnDivision.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDivision.Location = new System.Drawing.Point(287, 54);
+            this.btnDivision.Name = "btnDivision";
+            this.btnDivision.Size = new System.Drawing.Size(63, 34);
+            this.btnDivision.TabIndex = 19;
+            this.btnDivision.Text = "/";
+            this.btnDivision.UseVisualStyleBackColor = true;
             // 
             // btnLn
             // 
@@ -294,114 +294,114 @@
             this.btnSin.UseVisualStyleBackColor = true;
             this.btnSin.Click += new System.EventHandler(this.btnSin_Click);
             // 
-            // btnDeg
+            // btnDegree
             // 
-            this.btnDeg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDeg.Location = new System.Drawing.Point(11, 54);
-            this.btnDeg.Name = "btnDeg";
-            this.btnDeg.Size = new System.Drawing.Size(63, 34);
-            this.btnDeg.TabIndex = 21;
-            this.btnDeg.Text = "^";
-            this.btnDeg.UseVisualStyleBackColor = true;
-            this.btnDeg.Click += new System.EventHandler(this.btnDeg_Click);
+            this.btnDegree.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDegree.Location = new System.Drawing.Point(11, 54);
+            this.btnDegree.Name = "btnDegree";
+            this.btnDegree.Size = new System.Drawing.Size(63, 34);
+            this.btnDegree.TabIndex = 21;
+            this.btnDegree.Text = "^";
+            this.btnDegree.UseVisualStyleBackColor = true;
+            this.btnDegree.Click += new System.EventHandler(this.btnDegree_Click);
             // 
-            // btnSqrt
+            // btnSquareRoot
             // 
-            this.btnSqrt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSqrt.Location = new System.Drawing.Point(11, 94);
-            this.btnSqrt.Name = "btnSqrt";
-            this.btnSqrt.Size = new System.Drawing.Size(63, 34);
-            this.btnSqrt.TabIndex = 20;
-            this.btnSqrt.Text = "√";
-            this.btnSqrt.UseVisualStyleBackColor = true;
-            this.btnSqrt.Click += new System.EventHandler(this.btnSqrt_Click);
+            this.btnSquareRoot.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSquareRoot.Location = new System.Drawing.Point(11, 94);
+            this.btnSquareRoot.Name = "btnSquareRoot";
+            this.btnSquareRoot.Size = new System.Drawing.Size(63, 34);
+            this.btnSquareRoot.TabIndex = 20;
+            this.btnSquareRoot.Text = "√";
+            this.btnSquareRoot.UseVisualStyleBackColor = true;
+            this.btnSquareRoot.Click += new System.EventHandler(this.btnSquareRoot_Click);
             // 
-            // lblExpr
+            // lblExpression
             // 
-            this.lblExpr.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblExpr.Location = new System.Drawing.Point(12, 9);
-            this.lblExpr.Name = "lblExpr";
-            this.lblExpr.Size = new System.Drawing.Size(338, 42);
-            this.lblExpr.TabIndex = 25;
-            this.lblExpr.Text = "0";
-            this.lblExpr.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblExpression.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblExpression.Location = new System.Drawing.Point(12, 9);
+            this.lblExpression.Name = "lblExpression";
+            this.lblExpression.Size = new System.Drawing.Size(338, 42);
+            this.lblExpression.TabIndex = 25;
+            this.lblExpression.Text = "0";
+            this.lblExpression.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // formCalc
+            // FormCalc
             // 
-            this.AcceptButton = this.btnEq;
+            this.AcceptButton = this.btnEquals;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(362, 260);
-            this.Controls.Add(this.lblExpr);
+            this.Controls.Add(this.lblExpression);
             this.Controls.Add(this.btnLn);
             this.Controls.Add(this.btnCos);
             this.Controls.Add(this.btnSin);
-            this.Controls.Add(this.btnDeg);
-            this.Controls.Add(this.btnSqrt);
-            this.Controls.Add(this.btnDiv);
-            this.Controls.Add(this.btnBackSp);
-            this.Controls.Add(this.btnRightBr);
-            this.Controls.Add(this.btnDecSep);
+            this.Controls.Add(this.btnDegree);
+            this.Controls.Add(this.btnSquareRoot);
+            this.Controls.Add(this.btnDivision);
+            this.Controls.Add(this.btnBackSpace);
+            this.Controls.Add(this.btnRightBracket);
+            this.Controls.Add(this.btnDecimalSeparator);
             this.Controls.Add(this.btnSwitch);
             this.Controls.Add(this.btn8);
             this.Controls.Add(this.btn6);
             this.Controls.Add(this.btn1);
-            this.Controls.Add(this.btnSub);
+            this.Controls.Add(this.btnSubtraction);
             this.Controls.Add(this.btn5);
             this.Controls.Add(this.btn4);
             this.Controls.Add(this.btn0);
             this.Controls.Add(this.btn3);
-            this.Controls.Add(this.btnLeftBr);
-            this.Controls.Add(this.btnSum);
+            this.Controls.Add(this.btnLeftBracket);
+            this.Controls.Add(this.btnAddition);
             this.Controls.Add(this.btn7);
-            this.Controls.Add(this.btnEq);
+            this.Controls.Add(this.btnEquals);
             this.Controls.Add(this.btn9);
             this.Controls.Add(this.btn2);
-            this.Controls.Add(this.btnMul);
+            this.Controls.Add(this.btnMultiplication);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "formCalc";
+            this.Name = "FormCalc";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "calculator";
-            this.Load += new System.EventHandler(this.formCalc_Load);
-            this.Shown += new System.EventHandler(this.formCalc_Shown);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.formCalc_KeyDown);
+            this.Load += new System.EventHandler(this.FormCalc_Load);
+            this.Shown += new System.EventHandler(this.FormCalc_Shown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormCalc_KeyDown);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button btnMul;
+        private System.Windows.Forms.Button btnMultiplication;
         private System.Windows.Forms.Button btn2;
         private System.Windows.Forms.Button btn9;
-        private System.Windows.Forms.Button btnEq;
+        private System.Windows.Forms.Button btnEquals;
         private System.Windows.Forms.Button btn7;
-        private System.Windows.Forms.Button btnSum;
-        private System.Windows.Forms.Button btnLeftBr;
+        private System.Windows.Forms.Button btnAddition;
+        private System.Windows.Forms.Button btnLeftBracket;
         private System.Windows.Forms.Button btn3;
         private System.Windows.Forms.Button btn0;
         private System.Windows.Forms.Button btn4;
         private System.Windows.Forms.Button btn5;
-        private System.Windows.Forms.Button btnSub;
+        private System.Windows.Forms.Button btnSubtraction;
         private System.Windows.Forms.Button btn1;
         private System.Windows.Forms.Button btn6;
         private System.Windows.Forms.Button btn8;
         private System.Windows.Forms.Button btnSwitch;
-        private System.Windows.Forms.Button btnDecSep;
-        private System.Windows.Forms.Button btnRightBr;
-        private System.Windows.Forms.Button btnBackSp;
-        private System.Windows.Forms.Button btnDiv;
+        private System.Windows.Forms.Button btnDecimalSeparator;
+        private System.Windows.Forms.Button btnRightBracket;
+        private System.Windows.Forms.Button btnBackSpace;
+        private System.Windows.Forms.Button btnDivision;
         private System.Windows.Forms.Button btnLn;
         private System.Windows.Forms.Button btnCos;
         private System.Windows.Forms.Button btnSin;
-        private System.Windows.Forms.Button btnDeg;
-        private System.Windows.Forms.Button btnSqrt;
-        private System.Windows.Forms.Label lblExpr;
+        private System.Windows.Forms.Button btnDegree;
+        private System.Windows.Forms.Button btnSquareRoot;
+        private System.Windows.Forms.Label lblExpression;
     }
 }
 

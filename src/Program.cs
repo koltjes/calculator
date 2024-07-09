@@ -13,7 +13,7 @@ namespace _calculator
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new formCalc());
+            Application.Run(new FormCalc());
         }
     }
 }
