@@ -96,79 +96,79 @@ namespace _calculator
 
         Stack stack = new Stack();
 
-        static decimal[] ConvertExpressionToArray(string expressionAsString)
+        static decimal[] ConvertExpressionToTokens(string expression)
         {
-            decimal[] expressionAsArray = new decimal[1000];
-            int indexOfCurrentArrayElement = 0;
+            decimal[] arrayOfTokens = new decimal[1000];
+            int indexOfCurrentToken = 0;
             char currentChar;
-            bool previousCharIsDigit = false;
+            bool isPreviousCharDigit = false;
             bool isWritingDecimalPlacesMode = false;
             int countDecimalPlaces = 0;
 
-            for (int indexOfCurrentChar = 0; indexOfCurrentChar < expressionAsString.Length; indexOfCurrentChar++)
+            for (int indexOfCurrentChar = 0; indexOfCurrentChar < expression.Length; indexOfCurrentChar++)
             {
-                currentChar = expressionAsString[indexOfCurrentChar];
+                currentChar = expression[indexOfCurrentChar];
 
                 switch (currentChar)
                 {
                     case '(':
-                        if (previousCharIsDigit)
+                        if (isPreviousCharDigit)
                         {
-                            indexOfCurrentArrayElement += 1;
+                            indexOfCurrentToken += 1;
                         }
-                        expressionAsArray[indexOfCurrentArrayElement] = LEFT;
-                        indexOfCurrentArrayElement += 1;
-                        previousCharIsDigit = false;
+                        arrayOfTokens[indexOfCurrentToken] = LEFT;
+                        indexOfCurrentToken += 1;
+                        isPreviousCharDigit = false;
                         break;
 
                     case ')':
-                        if (previousCharIsDigit)
+                        if (isPreviousCharDigit)
                         {
-                            indexOfCurrentArrayElement += 1;
+                            indexOfCurrentToken += 1;
                         }
-                        expressionAsArray[indexOfCurrentArrayElement] = RIGHT;
-                        indexOfCurrentArrayElement += 1;
-                        previousCharIsDigit = false;
+                        arrayOfTokens[indexOfCurrentToken] = RIGHT;
+                        indexOfCurrentToken += 1;
+                        isPreviousCharDigit = false;
                         break;
 
                     case '+':
-                        if (previousCharIsDigit)
+                        if (isPreviousCharDigit)
                         {
-                            indexOfCurrentArrayElement += 1;
+                            indexOfCurrentToken += 1;
                         }
-                        expressionAsArray[indexOfCurrentArrayElement] = ADD;
-                        indexOfCurrentArrayElement += 1;
-                        previousCharIsDigit = false;
+                        arrayOfTokens[indexOfCurrentToken] = ADD;
+                        indexOfCurrentToken += 1;
+                        isPreviousCharDigit = false;
                         break;
 
                     case '-':
-                        if (previousCharIsDigit)
+                        if (isPreviousCharDigit)
                         {
-                            indexOfCurrentArrayElement += 1;
+                            indexOfCurrentToken += 1;
                         }
-                        expressionAsArray[indexOfCurrentArrayElement] = SUB;
-                        indexOfCurrentArrayElement += 1;
-                        previousCharIsDigit = false;
+                        arrayOfTokens[indexOfCurrentToken] = SUB;
+                        indexOfCurrentToken += 1;
+                        isPreviousCharDigit = false;
                         break;
 
                     case '*':
-                        if (previousCharIsDigit)
+                        if (isPreviousCharDigit)
                         {
-                            indexOfCurrentArrayElement += 1;
+                            indexOfCurrentToken += 1;
                         }
-                        expressionAsArray[indexOfCurrentArrayElement] = MUL;
-                        indexOfCurrentArrayElement += 1;
-                        previousCharIsDigit = false;
+                        arrayOfTokens[indexOfCurrentToken] = MUL;
+                        indexOfCurrentToken += 1;
+                        isPreviousCharDigit = false;
                         break;
 
                     case '/':
-                        if (previousCharIsDigit)
+                        if (isPreviousCharDigit)
                         {
-                            indexOfCurrentArrayElement += 1;
+                            indexOfCurrentToken += 1;
                         }
-                        expressionAsArray[indexOfCurrentArrayElement] = DIV;
-                        indexOfCurrentArrayElement += 1;
-                        previousCharIsDigit = false;
+                        arrayOfTokens[indexOfCurrentToken] = DIV;
+                        indexOfCurrentToken += 1;
+                        isPreviousCharDigit = false;
                         break;
 
                     default:
@@ -179,15 +179,15 @@ namespace _calculator
                                 countDecimalPlaces++;
                             }
 
-                            if (expressionAsArray[indexOfCurrentArrayElement] == 0)
+                            if (arrayOfTokens[indexOfCurrentToken] == 0)
                             {
-                                expressionAsArray[indexOfCurrentArrayElement] = int.Parse(Convert.ToString(currentChar));
-                                previousCharIsDigit = true;
+                                arrayOfTokens[indexOfCurrentToken] = int.Parse(Convert.ToString(currentChar));
+                                isPreviousCharDigit = true;
                             }
 
                             else
                             {
-                                expressionAsArray[indexOfCurrentArrayElement] = expressionAsArray[indexOfCurrentArrayElement] * 10 
+                                arrayOfTokens[indexOfCurrentToken] = arrayOfTokens[indexOfCurrentToken] * 10 
                                     + int.Parse(Convert.ToString(currentChar));
                             }
                         }
@@ -197,10 +197,10 @@ namespace _calculator
                             isWritingDecimalPlacesMode = true;
                         }
 
-                        if ((indexOfCurrentChar == expressionAsString.Length - 1 || !char.IsDigit(expressionAsString[indexOfCurrentChar + 1])) 
+                        if ((indexOfCurrentChar == expression.Length - 1 || !char.IsDigit(expression[indexOfCurrentChar + 1])) 
                             && isWritingDecimalPlacesMode)
                         {
-                            expressionAsArray[indexOfCurrentArrayElement] /= (decimal)Math.Pow(10, countDecimalPlaces);
+                            arrayOfTokens[indexOfCurrentToken] /= (decimal)Math.Pow(10, countDecimalPlaces);
                             countDecimalPlaces = 0;
                             isWritingDecimalPlacesMode = false;
                         }
@@ -209,29 +209,29 @@ namespace _calculator
                 }
             }
 
-            if (previousCharIsDigit)
+            if (isPreviousCharDigit)
             {
-                indexOfCurrentArrayElement += 1;
+                indexOfCurrentToken += 1;
             }
 
-            Array.Resize(ref expressionAsArray, indexOfCurrentArrayElement);
+            Array.Resize(ref arrayOfTokens, indexOfCurrentToken);
 
-            return expressionAsArray;
+            return arrayOfTokens;
         }
 
-        public bool CheckCorrectness(decimal[] expressionAsArray)
+        public bool CheckCorrectness(decimal[] arrayOfTokens)
         {
             int currentIndex = 0;
             bool isCorrect = true;
 
-            while (currentIndex < expressionAsArray.Length && isCorrect)
+            while (currentIndex < arrayOfTokens.Length && isCorrect)
             {
-                if (expressionAsArray[currentIndex] == LEFT)
+                if (arrayOfTokens[currentIndex] == LEFT)
                 {
                     stack.Push(LEFT);
                 }
 
-                if (expressionAsArray[currentIndex] == RIGHT)
+                if (arrayOfTokens[currentIndex] == RIGHT)
                 {
                     if (stack.top != null && stack.top.element == LEFT)
                     {
@@ -244,40 +244,40 @@ namespace _calculator
                     }
                 }
 
-                if (currentIndex == 0 && !(expressionAsArray[currentIndex] >= -1))
+                if (currentIndex == 0 && !(arrayOfTokens[currentIndex] >= -1))
                 {
                     isCorrect = false;
                     break;
                 }
 
-                switch (expressionAsArray[currentIndex])
+                switch (arrayOfTokens[currentIndex])
                 {
                     case LEFT:
-                        if (!(currentIndex < expressionAsArray.Length - 2 && ((expressionAsArray[currentIndex + 1] >= 0 
-                            && expressionAsArray[currentIndex + 2] <= ADD) | expressionAsArray[currentIndex + 1] == LEFT)))
+                        if (!(currentIndex < arrayOfTokens.Length - 2 && ((arrayOfTokens[currentIndex + 1] >= 0 
+                            && arrayOfTokens[currentIndex + 2] <= ADD) | arrayOfTokens[currentIndex + 1] == LEFT)))
                         {
                             isCorrect = false;
                         }
                         break;
                     case RIGHT:
-                        if (!((currentIndex < expressionAsArray.Length - 1 && expressionAsArray[currentIndex + 1] <= RIGHT) 
-                            | currentIndex == expressionAsArray.Length - 1))
+                        if (!((currentIndex < arrayOfTokens.Length - 1 && arrayOfTokens[currentIndex + 1] <= RIGHT) 
+                            | currentIndex == arrayOfTokens.Length - 1))
                         {
                             isCorrect = false;
                         }
                         break;
                     default:
-                        if (expressionAsArray[currentIndex] <= -3)
+                        if (arrayOfTokens[currentIndex] <= -3)
                         {
-                            if (!(currentIndex < expressionAsArray.Length - 1 && expressionAsArray[currentIndex + 1] >= LEFT))
+                            if (!(currentIndex < arrayOfTokens.Length - 1 && arrayOfTokens[currentIndex + 1] >= LEFT))
                             {
                                 isCorrect = false;
                             }
                         }
 
-                        if (expressionAsArray[currentIndex] >= 0)
+                        if (arrayOfTokens[currentIndex] >= 0)
                         {
-                            if (currentIndex < expressionAsArray.Length - 1 && expressionAsArray[currentIndex + 1] == LEFT)
+                            if (currentIndex < arrayOfTokens.Length - 1 && arrayOfTokens[currentIndex + 1] == LEFT)
                             {
                                 isCorrect = false;
                             }
@@ -301,33 +301,33 @@ namespace _calculator
             return isCorrect;
         }
 
-        public decimal[] ConvertToReversePolishNotation(decimal[] expressionAsArray)
+        public decimal[] ConvertToReversePolishNotation(decimal[] arrayOfTokens)
         {
-            int indexOfCurrentCharInArray = 0;
+            int indexOfCurrentTokenInArray = 0;
             int currentIndexInPolishNotation = 0;
 
-            while (indexOfCurrentCharInArray < expressionAsArray.Length)
+            while (indexOfCurrentTokenInArray < arrayOfTokens.Length)
             {
-                if (expressionAsArray[indexOfCurrentCharInArray] >= 0)
+                if (arrayOfTokens[indexOfCurrentTokenInArray] >= 0)
                 {
-                    expressionAsArray[currentIndexInPolishNotation] = expressionAsArray[indexOfCurrentCharInArray];
+                    arrayOfTokens[currentIndexInPolishNotation] = arrayOfTokens[indexOfCurrentTokenInArray];
                     currentIndexInPolishNotation++;
                 }
 
                 else
                 {
-                    if (expressionAsArray[indexOfCurrentCharInArray] == LEFT)
+                    if (arrayOfTokens[indexOfCurrentTokenInArray] == LEFT)
                     {
-                        stack.Push(expressionAsArray[indexOfCurrentCharInArray]);
+                        stack.Push(arrayOfTokens[indexOfCurrentTokenInArray]);
                     }
 
                     else
                     {
-                        if (expressionAsArray[indexOfCurrentCharInArray] == RIGHT)
+                        if (arrayOfTokens[indexOfCurrentTokenInArray] == RIGHT)
                         {
                             while (stack.top.element != LEFT)
                             {
-                                expressionAsArray[currentIndexInPolishNotation] = Convert.ToInt32(stack.Pop());
+                                arrayOfTokens[currentIndexInPolishNotation] = Convert.ToInt32(stack.Pop());
                                 currentIndexInPolishNotation++;
                             }
 
@@ -336,32 +336,32 @@ namespace _calculator
 
                         else
                         {
-                            while (stack.top != null && stack.top.element <= expressionAsArray[indexOfCurrentCharInArray])
+                            while (stack.top != null && stack.top.element <= arrayOfTokens[indexOfCurrentTokenInArray])
                             {
-                                expressionAsArray[currentIndexInPolishNotation] = Convert.ToInt32(stack.Pop());
+                                arrayOfTokens[currentIndexInPolishNotation] = Convert.ToInt32(stack.Pop());
                                 currentIndexInPolishNotation++;
                             }
 
-                            stack.Push(expressionAsArray[indexOfCurrentCharInArray]);
+                            stack.Push(arrayOfTokens[indexOfCurrentTokenInArray]);
                         }
                     }
                 }
 
-                indexOfCurrentCharInArray++;
+                indexOfCurrentTokenInArray++;
             }
 
             while (stack.top != null)
             {
-                expressionAsArray[currentIndexInPolishNotation] = Convert.ToInt32(stack.Pop());
+                arrayOfTokens[currentIndexInPolishNotation] = Convert.ToInt32(stack.Pop());
                 currentIndexInPolishNotation++;
             }
 
-            Array.Resize(ref expressionAsArray, currentIndexInPolishNotation);
+            Array.Resize(ref arrayOfTokens, currentIndexInPolishNotation);
 
-            return expressionAsArray;
+            return arrayOfTokens;
         }
 
-        public decimal CalculateExpression(decimal[] expressionAsArray)
+        public decimal CalculateExpression(decimal[] arrayOfTokens)
         {
             decimal PerformOperation(decimal arithmeticOperator, decimal a, decimal b)
             {
@@ -388,11 +388,11 @@ namespace _calculator
             decimal firstOperand;
             decimal secondOperand;
 
-            while (currentIndex < expressionAsArray.Length)
+            while (currentIndex < arrayOfTokens.Length)
             {
-                if (expressionAsArray[currentIndex] >= 0)
+                if (arrayOfTokens[currentIndex] >= 0)
                 {
-                    stack.Push(expressionAsArray[currentIndex]);
+                    stack.Push(arrayOfTokens[currentIndex]);
                 }
 
                 else
@@ -400,7 +400,7 @@ namespace _calculator
                     secondOperand = Convert.ToDecimal(stack.Pop());
                     firstOperand = Convert.ToDecimal(stack.Pop());
 
-                    result = PerformOperation(expressionAsArray[currentIndex], firstOperand, secondOperand);
+                    result = PerformOperation(arrayOfTokens[currentIndex], firstOperand, secondOperand);
                     stack.Push(result);
                 }
 
@@ -505,13 +505,13 @@ namespace _calculator
             }
             else
             {
-                decimal[] expressionAsArray = ConvertExpressionToArray(lblExpression.Text);
+                decimal[] arrayOfTokens = ConvertExpressionToTokens(lblExpression.Text);
 
-                if (CheckCorrectness(expressionAsArray))
+                if (CheckCorrectness(arrayOfTokens))
                 {
-                    expressionAsArray = ConvertToReversePolishNotation(expressionAsArray);
+                    arrayOfTokens = ConvertToReversePolishNotation(arrayOfTokens);
 
-                    decimal result = CalculateExpression(expressionAsArray);
+                    decimal result = CalculateExpression(arrayOfTokens);
 
                     if (result != ERR)
                     {
