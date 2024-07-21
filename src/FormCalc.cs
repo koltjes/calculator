@@ -24,14 +24,35 @@ namespace _calculator
 {
     public partial class FormCalc : Form
     {
+        public enum TokenType { Number, LeftBracket, RightBracket, Addition, Subtraction, Multiplication, Division, Error };
+
+        public struct Token
+        {
+            public TokenType tokenType;
+            public decimal number;
+
+            public Token() { }
+
+            public Token(TokenType tokenType)
+            {
+                this.tokenType = tokenType;
+            }
+
+            public Token(TokenType tokenType, decimal number)
+            {
+                this.tokenType = tokenType;
+                this.number = number;
+            }
+        }
+
         public class Node
         {
-            public decimal element;
+            public Token element;
             public Node next;
 
             public Node() { }
 
-            public Node(decimal element)
+            public Node(Token element)
             {
                 this.element = element;
             }
@@ -46,9 +67,9 @@ namespace _calculator
                 top = null;
             }
 
-            public void Push(decimal el)
+            public void Push(Token element)
             {
-                Node newTop = new Node(el);
+                Node newTop = new Node(element);
 
                 if (top != null)
                 {
@@ -62,32 +83,23 @@ namespace _calculator
                 }
             }
 
-            public decimal Pop()
+            public Token Pop()
             {
-                decimal el;
+                Token element = new Token();
 
                 if (top != null)
                 {
-                    el = top.element;
+                    element = top.element;
                     top = top.next;
                 }
-
                 else
                 {
-                    el = -13;
+                    element.tokenType = TokenType.Error;
                 }
 
-                return el;
+                return element;
             }
         }
-
-        const int LEFT = -1;
-        const int RIGHT = -2;
-        const int ADD = -3;
-        const int SUB = -4;
-        const int MUL = -5;
-        const int DIV = -6;
-        const int ERR = -13;
 
         const string ERROR_MESSAGE = "Error";
 
@@ -96,13 +108,15 @@ namespace _calculator
 
         Stack stack = new Stack();
 
-        static decimal[] ConvertExpressionToTokens(string expression)
+        static Token[] ConvertExpressionToTokens(string expression)
         {
-            decimal[] arrayOfTokens = new decimal[1000];
+            Token[] arrayOfTokens = new Token[1000];
+
             int indexOfCurrentToken = 0;
             char currentChar;
             bool isPreviousCharDigit = false;
             bool isWritingDecimalPlacesMode = false;
+            bool isNegativeNumber = false;
             int countDecimalPlaces = 0;
 
             for (int indexOfCurrentChar = 0; indexOfCurrentChar < expression.Length; indexOfCurrentChar++)
@@ -113,10 +127,16 @@ namespace _calculator
                 {
                     case '(':
                         if (isPreviousCharDigit)
-                        {
+                        {                          
+                            if (isNegativeNumber)
+                            {
+                                arrayOfTokens[indexOfCurrentToken].number *= -1;
+                                isNegativeNumber = false;
+                            }
+
                             indexOfCurrentToken += 1;
                         }
-                        arrayOfTokens[indexOfCurrentToken] = LEFT;
+                        arrayOfTokens[indexOfCurrentToken].tokenType = TokenType.LeftBracket;
                         indexOfCurrentToken += 1;
                         isPreviousCharDigit = false;
                         break;
@@ -124,9 +144,15 @@ namespace _calculator
                     case ')':
                         if (isPreviousCharDigit)
                         {
+                            if (isNegativeNumber)
+                            {
+                                arrayOfTokens[indexOfCurrentToken].number *= -1;
+                                isNegativeNumber = false;
+                            }
+
                             indexOfCurrentToken += 1;
                         }
-                        arrayOfTokens[indexOfCurrentToken] = RIGHT;
+                        arrayOfTokens[indexOfCurrentToken].tokenType = TokenType.RightBracket;
                         indexOfCurrentToken += 1;
                         isPreviousCharDigit = false;
                         break;
@@ -134,9 +160,15 @@ namespace _calculator
                     case '+':
                         if (isPreviousCharDigit)
                         {
+                            if (isNegativeNumber)
+                            {
+                                arrayOfTokens[indexOfCurrentToken].number *= -1;
+                                isNegativeNumber = false;
+                            }
+
                             indexOfCurrentToken += 1;
                         }
-                        arrayOfTokens[indexOfCurrentToken] = ADD;
+                        arrayOfTokens[indexOfCurrentToken].tokenType = TokenType.Addition;
                         indexOfCurrentToken += 1;
                         isPreviousCharDigit = false;
                         break;
@@ -144,19 +176,43 @@ namespace _calculator
                     case '-':
                         if (isPreviousCharDigit)
                         {
+                            if (isNegativeNumber)
+                            {
+                                arrayOfTokens[indexOfCurrentToken].number *= -1;
+                                isNegativeNumber = false;
+                            }
+
                             indexOfCurrentToken += 1;
                         }
-                        arrayOfTokens[indexOfCurrentToken] = SUB;
-                        indexOfCurrentToken += 1;
-                        isPreviousCharDigit = false;
+
+                        if (indexOfCurrentChar < expression.Length - 1
+                            && (indexOfCurrentToken == 0
+                            || arrayOfTokens[indexOfCurrentToken - 1].tokenType == TokenType.LeftBracket)
+                            && char.IsDigit(expression[indexOfCurrentChar + 1]))
+                        {
+                            isNegativeNumber = true;
+                        }
+                        else
+                        {
+                            arrayOfTokens[indexOfCurrentToken].tokenType = TokenType.Subtraction;
+                            indexOfCurrentToken += 1;
+                            isPreviousCharDigit = false;
+                        }
+
                         break;
 
                     case '*':
                         if (isPreviousCharDigit)
                         {
+                            if (isNegativeNumber)
+                            {
+                                arrayOfTokens[indexOfCurrentToken].number *= -1;
+                                isNegativeNumber = false;
+                            }
+
                             indexOfCurrentToken += 1;
                         }
-                        arrayOfTokens[indexOfCurrentToken] = MUL;
+                        arrayOfTokens[indexOfCurrentToken].tokenType = TokenType.Multiplication;
                         indexOfCurrentToken += 1;
                         isPreviousCharDigit = false;
                         break;
@@ -164,9 +220,15 @@ namespace _calculator
                     case '/':
                         if (isPreviousCharDigit)
                         {
+                            if (isNegativeNumber)
+                            {
+                                arrayOfTokens[indexOfCurrentToken].number *= -1;
+                                isNegativeNumber = false;
+                            }
+
                             indexOfCurrentToken += 1;
                         }
-                        arrayOfTokens[indexOfCurrentToken] = DIV;
+                        arrayOfTokens[indexOfCurrentToken].tokenType = TokenType.Division;
                         indexOfCurrentToken += 1;
                         isPreviousCharDigit = false;
                         break;
@@ -179,15 +241,14 @@ namespace _calculator
                                 countDecimalPlaces++;
                             }
 
-                            if (arrayOfTokens[indexOfCurrentToken] == 0)
+                            if (arrayOfTokens[indexOfCurrentToken].number == 0)
                             {
-                                arrayOfTokens[indexOfCurrentToken] = int.Parse(Convert.ToString(currentChar));
+                                arrayOfTokens[indexOfCurrentToken].number = int.Parse(Convert.ToString(currentChar));
                                 isPreviousCharDigit = true;
                             }
-
                             else
                             {
-                                arrayOfTokens[indexOfCurrentToken] = arrayOfTokens[indexOfCurrentToken] * 10 
+                                arrayOfTokens[indexOfCurrentToken].number = arrayOfTokens[indexOfCurrentToken].number * 10
                                     + int.Parse(Convert.ToString(currentChar));
                             }
                         }
@@ -197,10 +258,10 @@ namespace _calculator
                             isWritingDecimalPlacesMode = true;
                         }
 
-                        if ((indexOfCurrentChar == expression.Length - 1 || !char.IsDigit(expression[indexOfCurrentChar + 1])) 
+                        if (indexOfCurrentChar == expression.Length - 1 || !char.IsDigit(expression[indexOfCurrentChar + 1])
                             && isWritingDecimalPlacesMode)
                         {
-                            arrayOfTokens[indexOfCurrentToken] /= (decimal)Math.Pow(10, countDecimalPlaces);
+                            arrayOfTokens[indexOfCurrentToken].number /= (decimal)Math.Pow(10, countDecimalPlaces);
                             countDecimalPlaces = 0;
                             isWritingDecimalPlacesMode = false;
                         }
@@ -219,65 +280,71 @@ namespace _calculator
             return arrayOfTokens;
         }
 
-        public bool CheckCorrectness(decimal[] arrayOfTokens)
+        public bool CheckCorrectness(Token[] arrayOfTokens)
         {
             int currentIndex = 0;
             bool isCorrect = true;
 
             while (currentIndex < arrayOfTokens.Length && isCorrect)
             {
-                if (arrayOfTokens[currentIndex] == LEFT)
+                if (arrayOfTokens[currentIndex].tokenType == TokenType.LeftBracket)
                 {
-                    stack.Push(LEFT);
+                    stack.Push(arrayOfTokens[currentIndex]);
                 }
 
-                if (arrayOfTokens[currentIndex] == RIGHT)
+                if (arrayOfTokens[currentIndex].tokenType == TokenType.RightBracket)
                 {
-                    if (stack.top != null && stack.top.element == LEFT)
+                    if (stack.top != null && stack.top.element.tokenType == TokenType.LeftBracket)
                     {
                         stack.Pop();
                     }
-
                     else
                     {
                         isCorrect = false;
                     }
                 }
 
-                if (currentIndex == 0 && !(arrayOfTokens[currentIndex] >= -1))
+                if (currentIndex == 0
+                    && arrayOfTokens[currentIndex].tokenType != TokenType.Number
+                    && arrayOfTokens[currentIndex].tokenType != TokenType.LeftBracket)
                 {
                     isCorrect = false;
                     break;
                 }
 
-                switch (arrayOfTokens[currentIndex])
+                switch (arrayOfTokens[currentIndex].tokenType)
                 {
-                    case LEFT:
-                        if (!(currentIndex < arrayOfTokens.Length - 2 && ((arrayOfTokens[currentIndex + 1] >= 0 
-                            && arrayOfTokens[currentIndex + 2] <= ADD) | arrayOfTokens[currentIndex + 1] == LEFT)))
+                    case TokenType.LeftBracket:
+                        if (!(currentIndex < arrayOfTokens.Length - 2
+                            && ((arrayOfTokens[currentIndex + 1].tokenType == TokenType.Number
+                            && (int)arrayOfTokens[currentIndex + 2].tokenType >= (int)TokenType.RightBracket)
+                            || arrayOfTokens[currentIndex + 1].tokenType == TokenType.LeftBracket)))
                         {
                             isCorrect = false;
                         }
                         break;
-                    case RIGHT:
-                        if (!((currentIndex < arrayOfTokens.Length - 1 && arrayOfTokens[currentIndex + 1] <= RIGHT) 
-                            | currentIndex == arrayOfTokens.Length - 1))
+                    case TokenType.RightBracket:
+                        if (!((currentIndex < arrayOfTokens.Length - 1
+                            && (int)arrayOfTokens[currentIndex + 1].tokenType >= (int)TokenType.RightBracket)
+                            || currentIndex == arrayOfTokens.Length - 1))
                         {
                             isCorrect = false;
                         }
                         break;
                     default:
-                        if (arrayOfTokens[currentIndex] <= -3)
+                        if ((int)arrayOfTokens[currentIndex].tokenType >= (int)TokenType.Addition)
                         {
-                            if (!(currentIndex < arrayOfTokens.Length - 1 && arrayOfTokens[currentIndex + 1] >= LEFT))
+                            if (!(currentIndex < arrayOfTokens.Length - 1
+                                && (int)arrayOfTokens[currentIndex + 1].tokenType <= (int)TokenType.LeftBracket))
                             {
                                 isCorrect = false;
                             }
                         }
 
-                        if (arrayOfTokens[currentIndex] >= 0)
+                        if (arrayOfTokens[currentIndex].tokenType == TokenType.Number)
                         {
-                            if (currentIndex < arrayOfTokens.Length - 1 && arrayOfTokens[currentIndex + 1] == LEFT)
+                            if (currentIndex < arrayOfTokens.Length - 1
+                                && arrayOfTokens[currentIndex + 1].tokenType == TokenType.LeftBracket)
                             {
                                 isCorrect = false;
                             }
@@ -293,52 +360,45 @@ namespace _calculator
                 isCorrect = false;
             }
 
-            if (!isCorrect)
-            {
-                lblExpression.Text = ERROR_MESSAGE;
-            }
-
             return isCorrect;
         }
 
-        public decimal[] ConvertToReversePolishNotation(decimal[] arrayOfTokens)
+        public Token[] ConvertToReversePolishNotation(Token[] arrayOfTokens)
         {
             int indexOfCurrentTokenInArray = 0;
             int currentIndexInPolishNotation = 0;
 
             while (indexOfCurrentTokenInArray < arrayOfTokens.Length)
             {
-                if (arrayOfTokens[indexOfCurrentTokenInArray] >= 0)
+
+                if (arrayOfTokens[indexOfCurrentTokenInArray].tokenType == TokenType.Number)
                 {
                     arrayOfTokens[currentIndexInPolishNotation] = arrayOfTokens[indexOfCurrentTokenInArray];
                     currentIndexInPolishNotation++;
                 }
-
                 else
                 {
-                    if (arrayOfTokens[indexOfCurrentTokenInArray] == LEFT)
+                    if (arrayOfTokens[indexOfCurrentTokenInArray].tokenType == TokenType.LeftBracket)
                     {
                         stack.Push(arrayOfTokens[indexOfCurrentTokenInArray]);
                     }
-
                     else
                     {
-                        if (arrayOfTokens[indexOfCurrentTokenInArray] == RIGHT)
+                        if (arrayOfTokens[indexOfCurrentTokenInArray].tokenType == TokenType.RightBracket)
                         {
-                            while (stack.top.element != LEFT)
+                            while (stack.top.element.tokenType != TokenType.LeftBracket)
                             {
-                                arrayOfTokens[currentIndexInPolishNotation] = Convert.ToInt32(stack.Pop());
+                                arrayOfTokens[currentIndexInPolishNotation] = stack.Pop();
                                 currentIndexInPolishNotation++;
                             }
 
                             stack.Pop();
                         }
-
                         else
                         {
-                            while (stack.top != null && stack.top.element <= arrayOfTokens[indexOfCurrentTokenInArray])
+                            while (stack.top != null && (int)stack.top.element.tokenType >= (int)arrayOfTokens[indexOfCurrentTokenInArray].tokenType)
                             {
-                                arrayOfTokens[currentIndexInPolishNotation] = Convert.ToInt32(stack.Pop());
+                                arrayOfTokens[currentIndexInPolishNotation] = stack.Pop();
                                 currentIndexInPolishNotation++;
                             }
 
@@ -352,7 +412,7 @@ namespace _calculator
 
             while (stack.top != null)
             {
-                arrayOfTokens[currentIndexInPolishNotation] = Convert.ToInt32(stack.Pop());
+                arrayOfTokens[currentIndexInPolishNotation] = stack.Pop();
                 currentIndexInPolishNotation++;
             }
 
@@ -361,46 +421,44 @@ namespace _calculator
             return arrayOfTokens;
         }
 
-        public decimal CalculateExpression(decimal[] arrayOfTokens)
+        public Token CalculateExpression(Token[] arrayOfTokens)
         {
-            decimal PerformOperation(decimal arithmeticOperator, decimal a, decimal b)
+            Token PerformOperation(TokenType arithmeticOperator, decimal a, decimal b)
             {
                 try
                 {
                     switch (arithmeticOperator)
                     {
-                        case ADD: return a + b;
-                        case SUB: return a - b;
-                        case MUL: return a * b;
-                        case DIV: return a / b;
-                        default: return ERR;
+                        case TokenType.Addition: return new Token(TokenType.Number, a + b);
+                        case TokenType.Subtraction: return new Token(TokenType.Number, a - b);
+                        case TokenType.Multiplication: return new Token(TokenType.Number, a * b);
+                        case TokenType.Division: return new Token(TokenType.Number, a / b);
+                        default: return new Token(TokenType.Error);
                     }
                 }
-
                 catch
                 {
-                    return ERR;
+                    return new Token(TokenType.Error);
                 }
             }
 
-            decimal result = ERR;
+            Token result = new Token(TokenType.Error);
             int currentIndex = 0;
             decimal firstOperand;
             decimal secondOperand;
 
             while (currentIndex < arrayOfTokens.Length)
             {
-                if (arrayOfTokens[currentIndex] >= 0)
+                if (arrayOfTokens[currentIndex].tokenType == TokenType.Number)
                 {
                     stack.Push(arrayOfTokens[currentIndex]);
                 }
-
                 else
                 {
-                    secondOperand = Convert.ToDecimal(stack.Pop());
-                    firstOperand = Convert.ToDecimal(stack.Pop());
+                    secondOperand = stack.Pop().number;
+                    firstOperand = stack.Pop().number;
 
-                    result = PerformOperation(arrayOfTokens[currentIndex], firstOperand, secondOperand);
+                    result = PerformOperation(arrayOfTokens[currentIndex].tokenType, firstOperand, secondOperand);
                     stack.Push(result);
                 }
 
@@ -451,7 +509,7 @@ namespace _calculator
         {
             var clickedButton = (Button)sender;
 
-            if ((lblExpression.Text == "0" || lblExpression.Text == ERROR_MESSAGE) 
+            if ((lblExpression.Text == "0" || lblExpression.Text == ERROR_MESSAGE)
                 && clickedButton.Text != "," && clickedButton.Text != "^")
             {
                 lblExpression.Text = clickedButton.Text;
@@ -496,7 +554,6 @@ namespace _calculator
                         lblExpression.Text = ERROR_MESSAGE;
                     }
                 }
-
                 catch
                 {
                     lblExpression.Text = ERROR_MESSAGE;
@@ -505,22 +562,26 @@ namespace _calculator
             }
             else
             {
-                decimal[] arrayOfTokens = ConvertExpressionToTokens(lblExpression.Text);
+                Token[] arrayOfTokens = ConvertExpressionToTokens(lblExpression.Text);
 
                 if (CheckCorrectness(arrayOfTokens))
                 {
                     arrayOfTokens = ConvertToReversePolishNotation(arrayOfTokens);
 
-                    decimal result = CalculateExpression(arrayOfTokens);
+                    Token result = CalculateExpression(arrayOfTokens);
 
-                    if (result != ERR)
+                    if (result.tokenType != TokenType.Error)
                     {
-                        lblExpression.Text = result.ToString();
+                        lblExpression.Text = result.number.ToString();
                     }
                     else
                     {
                         lblExpression.Text = ERROR_MESSAGE;
                     }
+                }
+                else
+                {
+                    lblExpression.Text = ERROR_MESSAGE;
                 }
             }
         }
@@ -537,12 +598,10 @@ namespace _calculator
                 double result = Math.Sin(ConvertDegreesToRadians(Convert.ToDouble(lblExpression.Text)));
                 lblExpression.Text = result.ToString();
             }
-
             catch
             {
                 lblExpression.Text = ERROR_MESSAGE;
             }
-
             finally
             {
                 btnEquals.Focus();
@@ -556,12 +615,10 @@ namespace _calculator
                 double result = Math.Cos(ConvertDegreesToRadians(Convert.ToDouble(lblExpression.Text)));
                 lblExpression.Text = result.ToString();
             }
-
             catch
             {
                 lblExpression.Text = ERROR_MESSAGE;
             }
-
             finally
             {
                 btnEquals.Focus();
@@ -575,12 +632,10 @@ namespace _calculator
                 double result = Math.Log(Convert.ToDouble(lblExpression.Text));
                 lblExpression.Text = result.ToString();
             }
-
             catch
             {
                 lblExpression.Text = ERROR_MESSAGE;
             }
-
             finally
             {
                 btnEquals.Focus();
@@ -594,12 +649,10 @@ namespace _calculator
                 double result = Math.Sqrt(Convert.ToDouble(lblExpression.Text));
                 lblExpression.Text = result.ToString();
             }
-
             catch
             {
                 lblExpression.Text = ERROR_MESSAGE;
             }
-
             finally
             {
                 btnEquals.Focus();
