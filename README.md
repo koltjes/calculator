@@ -1,5 +1,6 @@
 # Calculator
 A simple calculator.
+
 It has two modes of operation.
 
 ![standart_mode](https://github.com/koltjes/calculator/assets/142670404/bdcb49cf-dc74-43bb-8186-56ebe255c76e)
