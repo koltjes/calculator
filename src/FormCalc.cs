@@ -127,7 +127,7 @@ namespace _calculator
                 {
                     case '(':
                         if (isPreviousCharDigit)
-                        {                          
+                        {
                             if (isNegativeNumber)
                             {
                                 arrayOfTokens[indexOfCurrentToken].number *= -1;
@@ -187,10 +187,21 @@ namespace _calculator
 
                         if (indexOfCurrentChar < expression.Length - 1
                             && (indexOfCurrentToken == 0
-                            || arrayOfTokens[indexOfCurrentToken - 1].tokenType == TokenType.LeftBracket)
-                            && char.IsDigit(expression[indexOfCurrentChar + 1]))
+                            || arrayOfTokens[indexOfCurrentToken - 1].tokenType == TokenType.LeftBracket))
                         {
-                            isNegativeNumber = true;
+                            if (char.IsDigit(expression[indexOfCurrentChar + 1]))
+                            {
+                                isNegativeNumber = true;
+                            }
+
+                            if (expression[indexOfCurrentChar + 1] == '(')
+                            {
+                                arrayOfTokens[indexOfCurrentToken].tokenType = TokenType.Number;
+                                arrayOfTokens[indexOfCurrentToken].number = -1;
+                                indexOfCurrentToken++;
+                                arrayOfTokens[indexOfCurrentToken].tokenType = TokenType.Multiplication;
+                                indexOfCurrentToken++;
+                            }
                         }
                         else
                         {
