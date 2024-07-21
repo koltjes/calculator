@@ -1,8 +1,5 @@
 # Calculator
 A simple calculator.
-
-Performs calculations for non-negative numbers (the result of calculations can be negative).
-
 It has two modes of operation.
 
 ![standart_mode](https://github.com/koltjes/calculator/assets/142670404/bdcb49cf-dc74-43bb-8186-56ebe255c76e)
